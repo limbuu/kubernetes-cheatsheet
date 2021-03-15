@@ -126,5 +126,63 @@ $ kubectl get pods --all-namespaces -o jsonpath='{range .items[*].status.initCon
 $ kubectl get pods -o json | jq '.items[].spec.containers[].env[]?.valueFrom.secretKeyRef.name' | grep -v null | sort | uniq            # get all secrets currently in use by a pod
 
 ```
+## Deployments
+* Create Commands.
+```
+$ kubectl apply -f deployment.yaml                   # create a deployment from yaml file
+$ kubectl create deployment nginx --image=nginx  # start a single instance of nginx
+```
+* Get Commands.
+```
+$ kubectl get deploy                                   # get all deployments
+$ kubectl get deployment                               # get all deployments
+$ kubectl get deployment my-deployment                 # get a particular deployment
+```
+* Describe Commands.
+```
+$ kubectl describe deploy my-deployment                 # describe deployment with verbose output
+```
+* Patch Commands.
+```
+$ kubectl patch deployment valid-deployment  --type json   -p='[{"op": "remove", "path": "/spec/template/spec/containers/0/livenessProbe"}]'               # Disable a deployment livenessProbe using a json patch with positional arrays
+```
+* Update/Rollout Commands.
+```
+$ kubectl set image deployment/frontend www=image:v2               # rolling update "www" containers of "frontend" deployment, updating the image
+$ kubectl rollout history deployment/frontend                      # check the history of deployments including the revision 
+$ kubectl rollout undo deployment/frontend                         # rollback to the previous deployment
+$ kubectl rollout undo deployment/frontend --to-revision=2         # rollback to a specific revision
+$ kubectl rollout status -w deployment/frontend                    # watch rolling update status of "frontend" deployment until completion
+$ kubectl rollout restart deployment/frontend                      # rolling restart of the "frontend" deployment
+
+```
+* Scale Commands.
+```
+$ kubectl scale --current-replicas=2 --replicas=3 deployment/mysql       # If mysql deployment current size is 2, scale mysql to 3
+$ kubectl scale --replicas=2 deployment/mysql                            # scal mysql deployment to 2 irrespective of what its current size is
+$ kubectl autoscale deployment my-deployment --min=2 --max=10                      # Auto scale a deployment with min=2 and max=10
+```
+* Delete Commands.
+```
+$ kubectl delete deploy --all                               # delete all deployments
+$ kubectl delete deployment --all                           # delete all deployments
+$ kubectl delete deploy my-deployment                       # delete a particular depoyment
+```
+* Troubleshooting and Interacting with Deployments Commands.
+```
+## port-forward
+$ kubectl port-forward deploy/my-deployment 5000:6000       # listen on local port 5000 and forward to port 6000 on a Pod created by my-deployment
+
+## access/execute deployments
+$ kubectl exec deploy/my-deployment -- ls                   # run command in first Pod and first container in Deployment (single- or multi-container cases)
+$ kubectl exec -it deploy/my-deployment bash                # execute a particular deployment
+
+## logs
+$ kubectl logs deploy/my-deployment                         # dump Pod logs for a Deployment (single-container case)
+$ kubectl logs deploy/my-deployment -c my-container         # dump Pod logs for a Deployment (multi-container case)
+
+```
+
+
 
 
