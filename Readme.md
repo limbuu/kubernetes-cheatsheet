@@ -198,10 +198,16 @@ $ kubectl get services --sort-by=.metadata.name     # get Services Sorted by Nam
 ## more advanced
 $ kubectl get service my-service -o go-template=’{{.spec.clusterIP}}’                   # get service cluster ip
 $ kubectl get service my-service -o go-template=’{{(index .spec.ports 0).port}}’        # get service cluster port
-$ kubectl expose deployment/my-app --type=LoadBalancer --name=my-service-name           # expose deployment as lb service
-$ kubectl expose service/my-service --type=LoadBalancer --name=my-service-name          # expose service as lb service
 
 ```
+* Expose Commands.
+```
+$ kubectl expose deployment my-deployment --port 8080 --target-port=9090  --type=Loadbalancer   # expose a deployment with host port 8080, container port 9090 with lb type Loadbalancer
+$ kubectl expose deployment/my-app --type=LoadBalancer --name=my-service-name                   # expose deployment as lb service
+$ kubectl expose service/my-service --type=LoadBalancer --name=my-service-name                  # expose service as lb service
+
+```
+
 * Describe Commands.
 ```
 $ kubectl describe svc my-service                   # describe a particular service
