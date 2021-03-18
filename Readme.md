@@ -182,7 +182,36 @@ $ kubectl logs deploy/my-deployment                         # dump Pod logs for 
 $ kubectl logs deploy/my-deployment -c my-container         # dump Pod logs for a Deployment (multi-container case)
 
 ```
+## Service
+* Create Commands.
+```
+$ kubectl apply -f service.yaml                            # create a service from yaml
+```
+* Get Commands.
+```
+$ kubectl get services                              # get all services in the namespace
+$ kubectl get svc                                   # get all services in the namespace
+$ kubectl get svc my-service                        # get a particular service
+$ kubectl get services --sort-by=.metadata.name     # get Services Sorted by Name
+ 
+```
+* Describe Commands.
+```
+$ kubectl describe svc my-service                   # describe a particular service
+```
+* Delete Commands.
+```
+$ kubectl delete svc my-service                     # delete a particular service
+$ kubectl delete svc --all                          # delete all services
+```
 
+* Troubleshooting and Interacting with Service Commands.
+```
+## port forward
+$ kubectl port-forward svc/my-service 5000                 # listen on local port 5000 and forward to port 5000 on Service backend
+$ kubectl port-forward svc/my-service 5000:my-service-port  # listen on local port 5000 and forward to Service target port with name my-servic-port
+
+```
 
 
 
