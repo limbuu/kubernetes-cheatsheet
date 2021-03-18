@@ -212,6 +212,63 @@ $ kubectl port-forward svc/my-service 5000                 # listen on local por
 $ kubectl port-forward svc/my-service 5000:my-service-port  # listen on local port 5000 and forward to Service target port with name my-servic-port
 
 ```
+# Namespace & Labels & Annotations
+* Namespace.
+```
+## List all namespaces.
+$ kubectl get namespaces                            # get all namespaces
+
+## components in all namespaces.
+$ kubectl get all --all-namespaces                  # list everything in all namespaces
+$ kubectl get pods --all-namespaces                 # list every pods in all namespaces
+$ kubectl get svc --all-namespaces                  # list every services in all namespaces
+$ kubectl get deployments --all-namespaces          # list every deployments in all namespaces
+
+## components in same namespace
+
+$ kubectl get all -n namespace                      # list everything in a particular namespaces
+$ kubectl get pods -n namespaces                    # list every pods in a particular namespaces
+$ kubectl get svc -n namespaces                     # list every services in a particular namespaces
+$ kubectl get deployments -n namespaces             # list every deployments in a particular namespaces
+
+## components in current namespace
+$ kubectl get all                                   # list everything in current namespaces
+$ kubectl get pods                                  # list every pods in current namespaces
+$ kubectl get svc                                   # list every services current all namespaces
+$ kubectl get deployments                           # list every deployments current all namespaces
+
+```
+
+* Labels.
+```
+## show componets with labels
+$ kubectl get pods --show-labels                    # list all pods showing lables
+$ kubectl get svc --show-labels                     # list all services showing lables
+$ kubectl get deploy --show-labels                  # list all deployments showing lables
+$ kubectl get nodes --show-labels                   # list all nodes showing lables
+
+## filter components by label                        
+$ kubectl get pods -l owner=manshi                   # list all pods with label owner=manshi
+$ kubectl get svc -l owner=manshi                    # list all services with label owner=manshi
+$ kubectl get deploy -l owner=manshi                 # list all deployments with label owner=manshi
+$ kubectl get nodes -l owner=manshi                  # list all nodes with label owner=manshi
+
+## add label to existing components
+$ kubectl label pods my-pod owner=manshi            # label pod with label owner=manshi               
+$ kubectl label svc my-svc owner=manshi             # label service with label owner=manshi
+$ kubectl label deploy my-deployment owner=manshi   # label deployment with label owner=manshi
+$ kubectl label nodes my-node owner=manshi          # label node with label owner=manshi
+
+```
+
+* Anotations.
+```
+$ kubectl annotate pods my-pod icon-url=http://goo.gl/XXBTWq        # annotate a pod with key=value
+$ kubectl annotate svc my-pod icon-url=http://goo.gl/XXBTWq         # annotate a service with key=value
+$ kubectl annotate deploy my-pod icon-url=http://goo.gl/XXBTWq      # annotate a deployment with key=value
+$ kubectl annotate nodes my-pod icon-url=http://goo.gl/XXBTWq       # annotate a node with key=value
+
+```
 
 
 
