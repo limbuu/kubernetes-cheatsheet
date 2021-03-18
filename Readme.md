@@ -190,10 +190,17 @@ $ kubectl apply -f service.yaml                            # create a service fr
 * Get Commands.
 ```
 $ kubectl get services                              # get all services in the namespace
-$ kubectl get svc                                   # get all services in the namespace
+$ kubectl get svc                                   # get all services in the namespace 
 $ kubectl get svc my-service                        # get a particular service
+$ kubectl get service my-service -o yaml            # get a particular service yaml
 $ kubectl get services --sort-by=.metadata.name     # get Services Sorted by Name
- 
+
+## more advanced
+$ kubectl get service my-service -o go-template=’{{.spec.clusterIP}}’                   # get service cluster ip
+$ kubectl get service my-service -o go-template=’{{(index .spec.ports 0).port}}’        # get service cluster port
+$ kubectl expose deployment/my-app --type=LoadBalancer --name=my-service-name           # expose deployment as lb service
+$ kubectl expose service/my-service --type=LoadBalancer --name=my-service-name          # expose service as lb service
+
 ```
 * Describe Commands.
 ```
@@ -210,6 +217,9 @@ $ kubectl delete svc --all                          # delete all services
 ## port forward
 $ kubectl port-forward svc/my-service 5000                 # listen on local port 5000 and forward to port 5000 on Service backend
 $ kubectl port-forward svc/my-service 5000:my-service-port  # listen on local port 5000 and forward to Service target port with name my-servic-port
+
+## service endpoints
+$ kubectl get endpoints                    # list endpoints of all services
 
 ```
 # Namespace & Labels & Annotations
